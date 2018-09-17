@@ -1,0 +1,41 @@
+import pygame
+import pygame.gfxdraw
+
+class button():
+    def __init__(self, Surface, X, Y, w, h, text):
+        self.Surface = Surface
+        self.X = X
+        self.Y = Y
+        self.text = text
+        self.w = w
+        self.h = h
+
+        self.OldLace = (253, 245, 230)
+        self.SlateGray = (198, 226, 255)
+        self.White = (255, 255, 255)
+        self.Black = (0, 0, 0)
+
+        self.mouse = pygame.mouse.get_pos()
+        self.pressed = pygame.mouse.get_pressed()[0]
+
+    def Font(self):
+        font = pygame.font.SysFont('Arial', 20)
+        Text = font.render(self.text, True, self.Black)
+        return Text
+
+    def Rect(self):
+        pygame.draw.rect(self.Surface, self.OldLace, (self.X, self.Y, self.w, self.h))
+        pygame.gfxdraw.rectangle(self.Surface, (self.X, self.Y, self.w, self.h), self.Black)
+        textRect = self.Font().get_rect()
+        textRect.center = ((self.X + (self.w / 2)), (self.Y + (self.h / 2)))
+        self.Surface.blit(self.Font(), textRect)
+        if self.X + self.w > self.mouse[0] > self.X and self.Y + self.h > self.mouse[1] > self.Y:
+            pygame.draw.rect(self.Surface, self.SlateGray, (self.X, self.Y, self.w, self.h))
+            pygame.gfxdraw.rectangle(self.Surface, (self.X, self.Y, self.w, self.h), self.Black)
+            textRect = self.Font().get_rect()
+            textRect.center = ((self.X + (self.w / 2)), (self.Y + (self.h / 2)))
+            self.Surface.blit(self.Font(), textRect)
+
+    def pos(self):
+        return pygame.draw.rect(self.Surface, self.OldLace, (self.X, self.Y, self.w, self.h))
+
