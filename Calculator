@@ -1,0 +1,113 @@
+from Button import button
+import pygame
+import pygame.gfxdraw
+
+pygame.init()
+display_width = 400
+display_height = 600
+LightGoldenrod = (255, 236, 139)
+
+pygame.display.set_caption('Calculator')
+screen = pygame.display.set_mode((display_width, display_height))  # Open a window on the screen
+screen.fill(LightGoldenrod)
+
+
+def text(t):  # show result
+    OldLace = (253, 245, 230)
+    Black = (0, 0, 0)
+    pygame.draw.ellipse(screen, OldLace, (5, 10, 390, 80))
+    pygame.gfxdraw.ellipse(screen,200, 50, (390) // 2, 80 // 2, Black)
+    font = pygame.font.SysFont('Arial', 35).render(t, True, Black)
+    textRect = (20, 30)
+
+    screen.blit(font, textRect)
+
+
+pygame.mixer.music.load('Blop sound effect.mp3')  # add music
+
+string = ' '
+running = True
+while running:
+
+    text(string)
+
+    bt1 = button(screen, 5, 105, 90, 90, '(')  # set input on button
+    bt2 = button(screen, 5, 205, 90, 90, '7')
+    bt3 = button(screen, 5, 305, 90, 90, '4')
+    bt4 = button(screen, 5, 405, 90, 90, '1')
+    bt5 = button(screen, 5, 505, 90, 90, '.')
+    bt6 = button(screen, 105, 105, 90, 90, ')')
+    bt7 = button(screen, 105, 205, 90, 90, '8')
+    bt8 = button(screen, 105, 305, 90, 90, '5')
+    bt9 = button(screen, 105, 405, 90, 90, '2')
+    bt10 = button(screen, 105, 505, 90, 90, '0')
+    bt11 = button(screen, 205, 105, 90, 90, 'Del.')
+    bt12 = button(screen, 205, 205, 90, 90, '9')
+    bt13 = button(screen, 205, 305, 90, 90, '6')
+    bt14 = button(screen, 205, 405, 90, 90, '3')
+    bt15 = button(screen, 205, 505, 90, 90, 'C')
+    bt16 = button(screen, 305, 105, 90, 90, '/')
+    bt17 = button(screen, 305, 205, 90, 90, '*')
+    bt18 = button(screen, 305, 305, 90, 90, '-')
+    bt19 = button(screen, 305, 405, 90, 90, '+')
+    bt20 = button(screen, 305, 505, 90, 90, '=')
+    [e.Rect() for e in
+     [bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt10, bt11, bt12, bt13, bt14, bt15, bt16, bt17, bt18, bt19,
+      bt20]]
+
+    if len(string) <= 20:
+        for event in pygame.event.get():
+            mouse = pygame.mouse.get_pos()
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONUP:
+                pass
+            elif event.type == pygame.MOUSEBUTTONDOWN:  # when click mouse button will show result
+                pygame.mixer.music.play()
+                if bt1.pos().collidepoint(mouse):
+                    string += '('
+                elif bt2.pos().collidepoint(mouse):
+                    string += '7'
+                elif bt3.pos().collidepoint(mouse):
+                    string += '4'
+                elif bt4.pos().collidepoint(mouse):
+                    string += '1'
+                elif bt5.pos().collidepoint(mouse):
+                    string += '.'
+                elif bt6.pos().collidepoint(mouse):
+                    string += ')'
+                elif bt7.pos().collidepoint(mouse):
+                    string += '8'
+                elif bt8.pos().collidepoint(mouse):
+                    string += '5'
+                elif bt9.pos().collidepoint(mouse):
+                    string += '2'
+                elif bt10.pos().collidepoint(mouse):
+                    string += '0'
+                elif bt12.pos().collidepoint(mouse):
+                    string += '9'
+                elif bt13.pos().collidepoint(mouse):
+                    string += '6'
+                elif bt14.pos().collidepoint(mouse):
+                    string += '3'
+                elif bt16.pos().collidepoint(mouse):
+                    string += '/'
+                elif bt17.pos().collidepoint(mouse):
+                    string += '*'
+                elif bt18.pos().collidepoint(mouse):
+                    string += '-'
+                elif bt19.pos().collidepoint(mouse):
+                    string += '+'
+                elif bt20.pos().collidepoint(mouse):
+                    if ('/' in string and string[string.index('/')+1]=='0') or (string[-1] in '+-*/') or ( '(' in string and ')' not in string) or ( ')' in string and '(' not in string) or (string[0] in '+-*/'):
+                        pass
+                    else:
+                        string = str(eval(string))
+                elif bt11.pos().collidepoint(mouse):
+                    string = string[:-1]
+                elif bt15.pos().collidepoint(mouse):
+                    string = ''
+    else:
+        string = string[:20]  # window show input not more than 20
+    pygame.display.update()
+pygame.display.quit()
