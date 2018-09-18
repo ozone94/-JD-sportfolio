@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+#title           :calculator
+#description     :calculator constructed by pygame library in python language
+#author          :จิรพา  ดาดี (Jirapa Dadee) id 6001012630012
+#blog            :
+#python_version  :3.6.1
+#pygame_version  :1.9.4
+#Thank you for the knowledge :https://pythonprogramming.net/pygame-buttons-part-1-button-rectangle/
+#=============================================================================================================================
+
+# import class and library
 from Button import button
 import pygame
 import pygame.gfxdraw
@@ -7,25 +18,23 @@ display_width = 400
 display_height = 600
 LightGoldenrod = (255, 236, 139)
 
-pygame.display.set_caption('Calculator')
-screen = pygame.display.set_mode((display_width, display_height))  # Open a window on the screen
+pygame.display.set_caption('Calculator') # set name pygame
+screen = pygame.display.set_mode((display_width, display_height))  # set surface on the screen
 screen.fill(LightGoldenrod)
 
-
-def text(t):  # show result
+# show result
+def text(t):
     OldLace = (253, 245, 230)
     Black = (0, 0, 0)
     pygame.draw.ellipse(screen, OldLace, (5, 10, 390, 80))
     pygame.gfxdraw.ellipse(screen,200, 50, (390) // 2, 80 // 2, Black)
-    font = pygame.font.SysFont('Arial', 35).render(t, True, Black)
+    font = pygame.font.SysFont('Arial', 30).render(t, True, Black)
     textRect = (20, 30)
-
     screen.blit(font, textRect)
-
 
 pygame.mixer.music.load('Blop sound effect.mp3')  # add music
 
-string = ' '
+string = ' ' #store input from mouse click
 running = True
 while running:
 
@@ -45,7 +54,7 @@ while running:
     bt12 = button(screen, 205, 205, 90, 90, '9')
     bt13 = button(screen, 205, 305, 90, 90, '6')
     bt14 = button(screen, 205, 405, 90, 90, '3')
-    bt15 = button(screen, 205, 505, 90, 90, 'C')
+    bt15 = button(screen, 205, 505, 90, 90, 'Clear')
     bt16 = button(screen, 305, 105, 90, 90, '/')
     bt17 = button(screen, 305, 205, 90, 90, '*')
     bt18 = button(screen, 305, 305, 90, 90, '-')
@@ -55,14 +64,14 @@ while running:
      [bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt10, bt11, bt12, bt13, bt14, bt15, bt16, bt17, bt18, bt19,
       bt20]]
 
-    if len(string) <= 20:
+    if len(string) <= 20: # output show result not more than 20
         for event in pygame.event.get():
             mouse = pygame.mouse.get_pos()
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: # pygame to be quit display
                 running = False
             elif event.type == pygame.MOUSEBUTTONUP:
                 pass
-            elif event.type == pygame.MOUSEBUTTONDOWN:  # when click mouse button will show result
+            elif event.type == pygame.MOUSEBUTTONDOWN:  # when click mouse on button will be show result
                 pygame.mixer.music.play()
                 if bt1.pos().collidepoint(mouse):
                     string += '('
@@ -99,15 +108,16 @@ while running:
                 elif bt19.pos().collidepoint(mouse):
                     string += '+'
                 elif bt20.pos().collidepoint(mouse):
-                    if ('/' in string and string[string.index('/')+1]=='0') or (string[-1] in '+-*/') or ( '(' in string and ')' not in string) or ( ')' in string and '(' not in string) or (string[0] in '+-*/'):
+                    # chek error if the format is not possible
+                    if ('/' in string and string[string.index('/')+1]=='0') or (string[-1] in '+-*/') or ( '(' in string and ')' not in string) or ( ')' in string and '(' not in string):
                         pass
                     else:
-                        string = str(eval(string))
+                        string = str(eval(string)) #eval calculate string
                 elif bt11.pos().collidepoint(mouse):
-                    string = string[:-1]
+                    string = string[:-1] # delete last member in string variable
                 elif bt15.pos().collidepoint(mouse):
-                    string = ''
+                    string = '' # delete all member in string variable
     else:
-        string = string[:20]  # window show input not more than 20
+        string = string[:20]
     pygame.display.update()
 pygame.display.quit()
