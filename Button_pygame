@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-#title           :calculator
-#description     :calculator constructed by pygame library in python language
+#title           :button
+#description     :class button for calculator constructed by pygame library in python language
 #author          :จิรพา  ดาดี (Jirapa Dadee) id 6001012630012
 #blog            :
 #python_version  :3.6.1
