@@ -1,8 +1,19 @@
+#!/usr/bin/env python
+#title           :calculator
+#description     :calculator constructed by pygame library in python language
+#author          :จิรพา  ดาดี (Jirapa Dadee) id 6001012630012
+#blog            :
+#python_version  :3.6.1
+#pygame_version  :1.9.4
+#Thank you for the knowledge :https://pythonprogramming.net/pygame-buttons-part-1-button-rectangle/
+#=============================================================================================================================
+
 import pygame
 import pygame.gfxdraw
 
+#class name button
 class button():
-    def __init__(self, Surface, X, Y, w, h, text):
+    def __init__(self, Surface, X, Y, w, h, text): # set X, Y, width, height value
         self.Surface = Surface
         self.X = X
         self.Y = Y
@@ -18,17 +29,19 @@ class button():
         self.mouse = pygame.mouse.get_pos()
         self.pressed = pygame.mouse.get_pressed()[0]
 
-    def Font(self):
+    def Font(self): #set font
         font = pygame.font.SysFont('Arial', 20)
         Text = font.render(self.text, True, self.Black)
         return Text
 
-    def Rect(self):
+    def Rect(self): # draw rectangles
         pygame.draw.rect(self.Surface, self.OldLace, (self.X, self.Y, self.w, self.h))
         pygame.gfxdraw.rectangle(self.Surface, (self.X, self.Y, self.w, self.h), self.Black)
         textRect = self.Font().get_rect()
         textRect.center = ((self.X + (self.w / 2)), (self.Y + (self.h / 2)))
         self.Surface.blit(self.Font(), textRect)
+        
+        # when position of mouse belong rectangles of position, color are change 
         if self.X + self.w > self.mouse[0] > self.X and self.Y + self.h > self.mouse[1] > self.Y:
             pygame.draw.rect(self.Surface, self.SlateGray, (self.X, self.Y, self.w, self.h))
             pygame.gfxdraw.rectangle(self.Surface, (self.X, self.Y, self.w, self.h), self.Black)
@@ -36,6 +49,6 @@ class button():
             textRect.center = ((self.X + (self.w / 2)), (self.Y + (self.h / 2)))
             self.Surface.blit(self.Font(), textRect)
 
-    def pos(self):
+    def pos(self): # get rectangles of position
         return pygame.draw.rect(self.Surface, self.OldLace, (self.X, self.Y, self.w, self.h))
 
