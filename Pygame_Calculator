@@ -3,7 +3,7 @@
 #description     :calculator constructed by pygame library in python language
 #author          :จิรพา  ดาดี (Jirapa Dadee) id 6001012630012
 #blog            :http://jirapad.blogspot.com/2018/09/pygame-pygame-multimedia-pygame-library.html?view=mosaic
-#python_version  :3.6.1
+#python_version  :3.7
 #pygame_version  :1.9.4
 #Thank you for the knowledge :https://pythonprogramming.net/pygame-buttons-part-1-button-rectangle/
 #=============================================================================================================================
@@ -109,10 +109,10 @@ while running:
                     string += '+'
                 elif bt20.pos().collidepoint(mouse):
                     # chek error if the format is not possible
-                    if ('/' in string and string[string.index('/')+1]=='0') or (string[-1] in '+-*/') or ( '(' in string and ')' not in string) or ( ')' in string and '(' not in string):
-                        pass
-                    else:
+                    try:
                         string = str(eval(string)) #eval calculate string
+                     except:
+                        pass
                 elif bt11.pos().collidepoint(mouse):
                     string = string[:-1] # delete last member in string variable
                 elif bt15.pos().collidepoint(mouse):
